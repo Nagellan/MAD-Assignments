@@ -1,6 +1,7 @@
 import 'package:assignment_1/auth_form.dart';
 import 'package:assignment_1/colors.dart';
 import 'package:assignment_1/page_wrapper.dart';
+import 'package:assignment_1/pages/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,8 +18,11 @@ class _LoginState extends State<Login> {
     final prefs = await SharedPreferences.getInstance();
     final isLoginSuccessful = prefs.getString(login) == password;
     if (isLoginSuccessful) {
-      // TODO: remove print
-      print('LOGIN SUCCESSFULL!!!');
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Profile(login: login, password: password),
+          ));
     } else {
       // TODO: remove print
       print('INCORRECT CREDENTIALS!!!');
