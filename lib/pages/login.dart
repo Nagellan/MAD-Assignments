@@ -4,6 +4,7 @@ import 'package:assignment_1/auth_form.dart';
 import 'package:assignment_1/colors.dart';
 import 'package:assignment_1/page_wrapper.dart';
 import 'package:assignment_1/pages/profile.dart';
+import 'package:assignment_1/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,12 +23,7 @@ class _LoginState extends State<Login> {
     final isLoginSuccessful = prefs.getString(login) == password;
 
     if (isLoginSuccessful) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('You successfully logged in!'),
-          duration: Duration(seconds: 1),
-        ),
-      );
+      showPrompt('You successfully logged in!', context, Duration(seconds: 1));
       Timer(
           Duration(milliseconds: 1800),
           () => {
@@ -39,11 +35,7 @@ class _LoginState extends State<Login> {
                     ))
               });
     } else {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Incorrect credentials!'),
-        ),
-      );
+      showError('Incorrect credentials!', context);
     }
   }
 

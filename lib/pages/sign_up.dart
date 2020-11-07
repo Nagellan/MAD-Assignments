@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:assignment_1/auth_form.dart';
 import 'package:assignment_1/page_wrapper.dart';
+import 'package:assignment_1/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,20 +21,11 @@ class _SignUpState extends State<SignUp> {
 
     if (isNewUser) {
       prefs.setString(login, password);
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('You successfully logged in!'),
-          duration: Duration(seconds: 1),
-        ),
-      );
+      showPrompt('You successfully signed up!', context, Duration(seconds: 1));
       Timer(Duration(milliseconds: 1800),
-          () => {Navigator.pushNamed(context, '/')});
+          () => {Navigator.pop(context)});
     } else {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text('This user already exists!'),
-        ),
-      );
+      showError('This user already exists!', context);
     }
   }
 
