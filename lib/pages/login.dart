@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:assignment_1/auth_form.dart';
 import 'package:assignment_1/colors.dart';
 import 'package:assignment_1/page_wrapper.dart';
@@ -14,18 +16,34 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final loginFormKey = GlobalKey<FormState>();
 
-  Future<Function> handleLoginSuccess(String login, String password) async {
+  Future<Function> handleLogin(
+      String login, String password, BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     final isLoginSuccessful = prefs.getString(login) == password;
+
     if (isLoginSuccessful) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Profile(login: login, password: password),
-          ));
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You successfully logged in!'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      Timer(
+          Duration(milliseconds: 1800),
+          () => {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          Profile(login: login, password: password),
+                    ))
+              });
     } else {
-      // TODO: remove print
-      print('INCORRECT CREDENTIALS!!!');
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Incorrect credentials!'),
+        ),
+      );
     }
   }
 
@@ -39,7 +57,7 @@ class _LoginState extends State<Login> {
           AuthForm(
             btnText: 'Login',
             formKey: loginFormKey,
-            onAuthSuccess: handleLoginSuccess,
+            onValidationSuccess: handleLogin,
           ),
           FlatButton(
             onPressed: () {

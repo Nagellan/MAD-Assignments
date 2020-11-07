@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 class AuthForm extends StatefulWidget {
   GlobalKey<FormState> formKey;
   String btnText;
-  Function(String login, String password) onAuthSuccess;
-  Function onAuthFailure;
+  Function(String login, String password, BuildContext context)
+      onValidationSuccess;
+  Function onValidationFailure;
 
   AuthForm(
-      {this.formKey, this.btnText, this.onAuthSuccess, this.onAuthFailure});
+      {this.formKey,
+      this.btnText,
+      this.onValidationSuccess,
+      this.onValidationFailure});
 
   @override
   _AuthFormState createState() => _AuthFormState();
@@ -63,20 +67,26 @@ class _AuthFormState extends State<AuthForm> {
           SizedBox(
             height: 40,
           ),
-          ElevatedButton(
-            onPressed: () {
-              if (widget.formKey.currentState.validate()) {
-                widget.onAuthSuccess(login.text, password.text);
-              } else {
-                widget.onAuthFailure();
-              }
-            },
-            child: Text(widget.btnText),
-            style: ButtonStyle(
-              backgroundColor:
-                  MaterialStateProperty.all<Color>(AppColors.PRIMARY_COLOR),
-            ),
-          ),
+          Builder(
+              // Create an inner BuildContext so that the onPressed methods
+              // can refer to the Scaffold with Scaffold.of().
+              builder: (BuildContext context) {
+            return ElevatedButton(
+              onPressed: () {
+                if (widget.formKey.currentState.validate()) {
+                  widget.onValidationSuccess(
+                      login.text, password.text, context);
+                } else if (widget.onValidationFailure != null) {
+                  widget.onValidationFailure();
+                }
+              },
+              child: Text(widget.btnText),
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(AppColors.PRIMARY_COLOR),
+              ),
+            );
+          }),
         ],
       ),
     );

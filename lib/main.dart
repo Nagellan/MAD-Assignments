@@ -8,7 +8,7 @@ void main() {
     routes: {
       '/': (context) => Login(),
       '/sign-up': (context) => SignUp(),
-      '/profile': (context) => Profile(),
+      '/profile': (context) => Profile()
     },
   ));
 }

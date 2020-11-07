@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:assignment_1/auth_form.dart';
 import 'package:assignment_1/page_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +13,28 @@ class SignUp extends StatefulWidget {
 class _SignUpState extends State<SignUp> {
   final signUpFormKey = GlobalKey<FormState>();
 
-  Future<Function> handleSignUpSuccess(String login, String password) async {
+  Future<Function> handleSignUp(
+      String login, String password, BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setString(login, password);
-    Navigator.pushNamed(context, '/');
+    final isNewUser = prefs.getString(login) == null;
+
+    if (isNewUser) {
+      prefs.setString(login, password);
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('You successfully logged in!'),
+          duration: Duration(seconds: 1),
+        ),
+      );
+      Timer(Duration(milliseconds: 1800),
+          () => {Navigator.pushNamed(context, '/')});
+    } else {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text('This user already exists!'),
+        ),
+      );
+    }
   }
 
   @override
@@ -24,7 +44,7 @@ class _SignUpState extends State<SignUp> {
       child: AuthForm(
         btnText: 'Sign up',
         formKey: signUpFormKey,
-        onAuthSuccess: handleSignUpSuccess,
+        onValidationSuccess: handleSignUp,
       ),
     );
   }
