@@ -3,6 +3,7 @@ import 'package:assignment_1/colors.dart';
 import 'package:assignment_1/page_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,6 +12,18 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final loginFormKey = GlobalKey<FormState>();
+
+  Future<Function> handleLoginSuccess(String login, String password) async {
+    final prefs = await SharedPreferences.getInstance();
+    final isLoginSuccessful = prefs.getString(login) == password;
+    if (isLoginSuccessful) {
+      // TODO: remove print
+      print('LOGIN SUCCESSFULL!!!');
+    } else {
+      // TODO: remove print
+      print('INCORRECT CREDENTIALS!!!');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +35,7 @@ class _LoginState extends State<Login> {
           AuthForm(
             btnText: 'Login',
             formKey: loginFormKey,
-            onAuthSuccess: (login, password) {
-              // TODO: remove print
-              print('LOGIN SUCCESS $login: $password');
-            },
-            onAuthFailure: () {
-              // TODO: remove print
-              print('LOGIN INCORRECT');
-            },
+            onAuthSuccess: handleLoginSuccess,
           ),
           FlatButton(
             onPressed: () {
