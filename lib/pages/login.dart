@@ -45,19 +45,26 @@ class _LoginState extends State<Login> {
                       if (value.isEmpty) {
                         return 'Please fill this field';
                       }
+                      if (value.length < 8) {
+                        return 'Password must have at least 8 letters';
+                      }
                       return null;
                     },
                   ),
                   SizedBox(
                     height: 40,
                   ),
-                  ElevatedButton(onPressed: () {
-                    if (loginFormKey.currentState.validate()) {
-                      print('LOGIN SUCCESS');
-                    } else {
-                      print('LOGIN INCORRECT');
-                    }
-                  }, child: Text('Login')),
+                  ElevatedButton(
+                      onPressed: () {
+                        if (loginFormKey.currentState.validate()) {
+                          // TODO: remove print
+                          print('LOGIN SUCCESS');
+                        } else {
+                          // TODO: remove print
+                          print('LOGIN INCORRECT');
+                        }
+                      },
+                      child: Text('Login')),
                 ],
               ),
             ),
