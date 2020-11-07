@@ -20,7 +20,10 @@ class PageWrapper extends StatelessWidget {
         child: Center(
           child: Card(
             color: Colors.white,
-            child: this.child,
+            child: Padding(
+              padding: EdgeInsets.all(20),
+              child: this.child,
+            ),
           ),
         ),
       ),
