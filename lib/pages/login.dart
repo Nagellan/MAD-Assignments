@@ -1,3 +1,4 @@
+import 'package:assignment_1/colors.dart';
 import 'package:assignment_1/page_wrapper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,16 +51,28 @@ class _LoginState extends State<Login> {
                 height: 40,
               ),
               ElevatedButton(
-                  onPressed: () {
-                    if (loginFormKey.currentState.validate()) {
-                      // TODO: remove print
-                      print('LOGIN SUCCESS');
-                    } else {
-                      // TODO: remove print
-                      print('LOGIN INCORRECT');
-                    }
-                  },
-                  child: Text('Login')),
+                onPressed: () {
+                  if (loginFormKey.currentState.validate()) {
+                    // TODO: remove print
+                    print('LOGIN SUCCESS');
+                  } else {
+                    // TODO: remove print
+                    print('LOGIN INCORRECT');
+                  }
+                },
+                child: Text('Login'),
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(AppColors.PRIMARY_COLOR),
+                ),
+              ),
+              FlatButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/sign-up');
+                },
+                child: Text('First time here? Sign up'),
+                textColor: AppColors.PRIMARY_COLOR_LIGHTER,
+              ),
             ],
           ),
         ),
