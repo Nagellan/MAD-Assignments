@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AuthForm extends StatefulWidget {
   GlobalKey<FormState> formKey;
   String btnText;
-  Function onAuthSuccess;
+  Function(String login, String password) onAuthSuccess;
   Function onAuthFailure;
 
   AuthForm(
@@ -15,6 +15,17 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  final login = TextEditingController();
+  final password = TextEditingController();
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is disposed.
+    login.dispose();
+    password.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -32,6 +43,7 @@ class _AuthFormState extends State<AuthForm> {
               }
               return null;
             },
+            controller: login,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -46,6 +58,7 @@ class _AuthFormState extends State<AuthForm> {
               }
               return null;
             },
+            controller: password,
           ),
           SizedBox(
             height: 40,
@@ -53,7 +66,7 @@ class _AuthFormState extends State<AuthForm> {
           ElevatedButton(
             onPressed: () {
               if (widget.formKey.currentState.validate()) {
-                widget.onAuthSuccess();
+                widget.onAuthSuccess(login.text, password.text);
               } else {
                 widget.onAuthFailure();
               }

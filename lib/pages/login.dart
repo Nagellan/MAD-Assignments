@@ -22,9 +22,9 @@ class _LoginState extends State<Login> {
           AuthForm(
             btnText: 'Login',
             formKey: loginFormKey,
-            onAuthSuccess: () {
+            onAuthSuccess: (login, password) {
               // TODO: remove print
-              print('LOGIN SUCCESS');
+              print('LOGIN SUCCESS $login: $password');
             },
             onAuthFailure: () {
               // TODO: remove print

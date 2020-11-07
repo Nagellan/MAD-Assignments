@@ -17,9 +17,9 @@ class _SignUpState extends State<SignUp> {
       child: AuthForm(
         btnText: 'Sign up',
         formKey: signUpFormKey,
-        onAuthSuccess: () {
+        onAuthSuccess: (login, password) {
           // TODO: remove print
-          print('SIGN UP SUCCESS');
+          print('SIGN UP SUCCESS $login $password');
         },
         onAuthFailure: () {
           // TODO: remove print
