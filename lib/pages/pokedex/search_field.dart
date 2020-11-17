@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 class SearchField extends StatefulWidget {
   final Function(String) handleSubmit;
+  final TextEditingController controller;
 
-  SearchField({this.handleSubmit});
+  SearchField({this.handleSubmit, this.controller});
 
   @override
   _SearchFieldState createState() => _SearchFieldState();
 }
 
 class _SearchFieldState extends State<SearchField> {
-  final _controller = TextEditingController();
   bool isClearBtnVisible = false;
 
   @override
@@ -18,25 +18,25 @@ class _SearchFieldState extends State<SearchField> {
     super.initState();
 
     // Start listening to changes.
-    _controller.addListener(() {
+    widget.controller.addListener(() {
       setState(() {
-        isClearBtnVisible = _controller.text.length > 0;
+        isClearBtnVisible = widget.controller.text.length > 0;
       });
     });
   }
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the
+    // Clean up the widget.controller when the widget is removed from the
     // widget tree.
-    _controller.dispose();
+    widget.controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      controller: _controller,
+      controller: widget.controller,
       autofocus: false,
       onSubmitted: (text) {
         widget.handleSubmit(text);
@@ -50,7 +50,7 @@ class _SearchFieldState extends State<SearchField> {
           child: IconButton(
             icon: Icon(Icons.clear),
             onPressed: () {
-              _controller.clear();
+              widget.controller.clear();
             },
           ),
         ),
