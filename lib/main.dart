@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:assignment_2/pages/pokedex.dart';
+import 'file:///C:/Users/irekn/AndroidStudioProjects/MAD_Assignments/assignment_2/lib/pages/pokedex/pokedex.dart';
 
 void main() {
   runApp(MaterialApp(

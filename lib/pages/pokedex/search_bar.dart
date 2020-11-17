@@ -1,4 +1,4 @@
-import 'package:assignment_2/search_field.dart';
+import 'file:///C:/Users/irekn/AndroidStudioProjects/MAD_Assignments/assignment_2/lib/pages/pokedex/search_field.dart';
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
