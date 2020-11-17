@@ -12,30 +12,46 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexState extends State<Pokedex> {
-  List<String> pokemons = [];
+  List<String> pokemonImgUrls = [];
 
   void addPokemonForms(var pokemonForms) {
     if (pokemonForms == null) return;
     pokemonForms.forEach((pokemonForm) {
       String pokemonName = pokemonForm['species']['name'];
       setState(() {
-        pokemons.add(pokemonName);
+        pokemonImgUrls.add(pokemonName);
       });
       addPokemonForms(pokemonForm['evolves_to']);
     });
   }
 
   void handleSubmit(String text) async {
+    setState(() {
+      pokemonImgUrls = [];
+    });
+
     Response pokemonSpeciesRes =
-    await get('https://pokeapi.co/api/v2/pokemon-species/$text');
+        await get('https://pokeapi.co/api/v2/pokemon/$text');
     if (pokemonSpeciesRes.statusCode == 200) {
-      var pokemonSpecies = convert.jsonDecode(pokemonSpeciesRes.body);
-      String evolutionChainUrl = pokemonSpecies['evolution_chain']['url'];
-      Response evolutionChainRes = await get(evolutionChainUrl);
-      if (evolutionChainRes.statusCode == 200) {
-        var evolutionChain = convert.jsonDecode(evolutionChainRes.body);
-        addPokemonForms(evolutionChain['chain']['evolves_to']);
-      }
+      var pokemon = convert.jsonDecode(pokemonSpeciesRes.body);
+      var sprites = pokemon['sprites'];
+      List<dynamic> imgUrls = [
+        sprites['back_default'],
+        sprites['back_female'],
+        sprites['back_shiny'],
+        sprites['back_shiny_female'],
+        sprites['front_default'],
+        sprites['front_female'],
+        sprites['front_shiny'],
+        sprites['front_shiny_female'],
+      ];
+      imgUrls.forEach((url) {
+        if (url != null) {
+          setState(() {
+            pokemonImgUrls.add(url);
+          });
+        }
+      });
     }
   }
 
@@ -45,7 +61,7 @@ class _PokedexState extends State<Pokedex> {
       backgroundColor: Color(0xffeef8ff),
       appBar: PokeAppBar(),
       body: Stack(children: <Widget>[
-        Grid(pokemons: pokemons),
+        Grid(pokemons: pokemonImgUrls),
         Align(
           alignment: Alignment.bottomCenter,
           child: SearchBar(handleSubmit: handleSubmit),

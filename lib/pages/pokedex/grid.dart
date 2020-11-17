@@ -10,7 +10,7 @@ class Grid extends StatelessWidget {
     return GridView.count(
       padding: EdgeInsets.fromLTRB(7.5, 7.5, 7.5, 87.5),
       crossAxisCount: 2,
-      children: pokemons.map((name) => Card(child: Text(name))).toList(),
+      children: pokemons.map((url) => Image.network(url)).toList(),
     );
   }
 }
