@@ -1,3 +1,4 @@
+import 'package:assignment_2/search_bar.dart';
 import 'package:flutter/material.dart';
 
 class Pokedex extends StatefulWidget {
@@ -16,7 +17,7 @@ class _PokedexState extends State<Pokedex> {
           style: TextStyle(
             color: Color(0xff222222),
             fontFamily: 'PF-Benchmark-Pro-Bold',
-            fontSize: 30.0,
+            fontSize: 25.0,
           ),
         ),
         centerTitle: true,
@@ -25,19 +26,7 @@ class _PokedexState extends State<Pokedex> {
       ),
       body: Align(
         alignment: Alignment.bottomCenter,
-        child: Padding(
-          padding: EdgeInsets.all(15),
-          child: Card(
-            child: Padding(
-              padding: EdgeInsets.all(15),
-              child: TextField(
-                decoration: InputDecoration(
-                  labelText: 'Search Pokemon',
-                ),
-              ),
-            ),
-          ),
-        ),
+        child: SearchBar(),
       ),
     );
   }
