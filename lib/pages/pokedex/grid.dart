@@ -1,4 +1,5 @@
 import 'package:assignment_2/pages/pokemon_full.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Grid extends StatelessWidget {
@@ -21,8 +22,14 @@ class Grid extends StatelessWidget {
                     ),
                   );
                 },
-                child: Card(
-                  child: Image.network(url),
+                child: Padding(
+                  padding: EdgeInsets.all(5),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                    ),
+                    child: Image.network(url),
+                  ),
                 ),
               ))
           .toList(),
