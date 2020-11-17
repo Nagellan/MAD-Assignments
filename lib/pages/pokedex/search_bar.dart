@@ -2,6 +2,10 @@ import 'file:///C:/Users/irekn/AndroidStudioProjects/MAD_Assignments/assignment_
 import 'package:flutter/material.dart';
 
 class SearchBar extends StatefulWidget {
+  final Function(String) handleSubmit;
+
+  SearchBar({this.handleSubmit});
+
   @override
   _SearchBarState createState() => _SearchBarState();
 }
@@ -18,7 +22,7 @@ class _SearchBarState extends State<SearchBar> {
         ),
         child: Padding(
           padding: EdgeInsets.all(5),
-          child: SearchField(),
+          child: SearchField(handleSubmit: widget.handleSubmit),
         ),
       ),
     );

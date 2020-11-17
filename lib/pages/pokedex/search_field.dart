@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class SearchField extends StatefulWidget {
+  final Function(String) handleSubmit;
+
+  SearchField({this.handleSubmit});
+
   @override
   _SearchFieldState createState() => _SearchFieldState();
 }
@@ -35,7 +39,7 @@ class _SearchFieldState extends State<SearchField> {
       controller: _controller,
       autofocus: false,
       onSubmitted: (text) {
-        print(text);
+        widget.handleSubmit(text);
       },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(15, 15, 0, 0),
