@@ -33,7 +33,10 @@ class _SearchFieldState extends State<SearchField> {
   Widget build(BuildContext context) {
     return TextField(
       controller: _controller,
-      autofocus: true,
+      autofocus: false,
+      onSubmitted: (text) {
+        print(text);
+      },
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(15, 15, 0, 0),
         hintText: 'Search Pokemon',

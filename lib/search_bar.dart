@@ -10,7 +10,7 @@ class _SearchBarState extends State<SearchBar> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.symmetric(horizontal: 11, vertical: 15),
       child: Card(
         elevation: 3,
         shape: RoundedRectangleBorder(
