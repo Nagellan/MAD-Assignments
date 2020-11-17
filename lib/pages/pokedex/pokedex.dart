@@ -3,6 +3,7 @@ import 'dart:convert' as convert;
 import 'package:assignment_2/pages/pokedex/app_bar.dart';
 import 'package:assignment_2/pages/pokedex/grid.dart';
 import 'package:assignment_2/pages/pokedex/search_bar.dart';
+import 'package:assignment_2/pokemon.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
@@ -12,22 +13,11 @@ class Pokedex extends StatefulWidget {
 }
 
 class _PokedexState extends State<Pokedex> {
-  List<String> pokemonImgUrls = [];
-
-  void addPokemonForms(var pokemonForms) {
-    if (pokemonForms == null) return;
-    pokemonForms.forEach((pokemonForm) {
-      String pokemonName = pokemonForm['species']['name'];
-      setState(() {
-        pokemonImgUrls.add(pokemonName);
-      });
-      addPokemonForms(pokemonForm['evolves_to']);
-    });
-  }
+  List<Pokemon> pokemons = [];
 
   void handleSubmit(String text) async {
     setState(() {
-      pokemonImgUrls = [];
+      pokemons = [];
     });
 
     Response pokemonSpeciesRes =
@@ -48,7 +38,7 @@ class _PokedexState extends State<Pokedex> {
       imgUrls.forEach((url) {
         if (url != null) {
           setState(() {
-            pokemonImgUrls.add(url);
+            pokemons.add(new Pokemon(name: pokemon['name'], img: url));
           });
         }
       });
@@ -59,9 +49,9 @@ class _PokedexState extends State<Pokedex> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffeef8ff),
-      appBar: PokeAppBar(),
+      appBar: PokeAppBar(text: 'Pokedex'),
       body: Stack(children: <Widget>[
-        Grid(pokemons: pokemonImgUrls),
+        Grid(pokemons: pokemons),
         Align(
           alignment: Alignment.bottomCenter,
           child: SearchBar(handleSubmit: handleSubmit),

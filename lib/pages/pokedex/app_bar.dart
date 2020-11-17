@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PokeAppBar extends AppBar {
-  PokeAppBar()
+  final String text;
+
+  PokeAppBar({this.text})
       : super(
     toolbarHeight: 70,
     title: Text(
-      'Pokedex',
+      text,
       style: TextStyle(
         color: Color(0xff222222),
         fontFamily: 'PF-Benchmark-Pro-Bold',
@@ -15,5 +17,8 @@ class PokeAppBar extends AppBar {
     centerTitle: true,
     backgroundColor: Colors.transparent,
     shadowColor: Colors.transparent,
+    iconTheme: IconThemeData(
+      color: Color(0xff222222), //change your color here
+    ),
   );
 }

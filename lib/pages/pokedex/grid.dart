@@ -1,24 +1,25 @@
 import 'package:assignment_2/pages/pokemon_full.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:assignment_2/pokemon.dart';
 import 'package:flutter/material.dart';
 
 class Grid extends StatelessWidget {
-  final List<String> pokemons;
+  final List<Pokemon> pokemons;
 
   Grid({this.pokemons});
 
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      padding: EdgeInsets.fromLTRB(7.5, 7.5, 7.5, 87.5),
+      padding: EdgeInsets.fromLTRB(15, 7.5, 15, 87.5),
       crossAxisCount: 2,
       children: pokemons
-          .map((url) => GestureDetector(
+          .map((pokemon) => GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PokemonFull(url: url),
+                      builder: (context) =>
+                          PokemonFull(url: pokemon.img, name: pokemon.name),
                     ),
                   );
                 },
@@ -28,7 +29,7 @@ class Grid extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20.0),
                     ),
-                    child: Image.network(url),
+                    child: Image.network(pokemon.img),
                   ),
                 ),
               ))
