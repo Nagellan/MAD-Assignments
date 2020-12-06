@@ -1,3 +1,4 @@
+import 'package:assignment_3/filter.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
@@ -12,6 +13,18 @@ class Home extends StatelessWidget {
           height: 30.0,
         ),
       ),
+      body: Stack(children: <Widget>[
+        ListView(
+          padding: EdgeInsets.all(15),
+          children: <Widget>[
+            Text('Body'),
+          ],
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Filter(),
+        ),
+      ]),
     );
   }
 }
