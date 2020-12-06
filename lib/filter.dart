@@ -1,3 +1,4 @@
+import 'package:assignment_3/select.dart';
 import 'package:flutter/material.dart';
 
 class Filter extends StatefulWidget {
@@ -34,21 +35,11 @@ class _FilterState extends State<Filter> {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: DropdownButtonFormField<String>(
+                child: Select(
                   value: currentKind,
+                  label: 'Kind',
+                  items: kinds,
                   onChanged: (String value) => handleChange(kind: value),
-                  items: kinds
-                      .map<DropdownMenuItem<String>>(
-                        (String value) => DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        ),
-                      )
-                      .toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Kind',
-                    border: InputBorder.none,
-                  ),
                 ),
               ),
               Container(
@@ -59,23 +50,13 @@ class _FilterState extends State<Filter> {
               ),
               Expanded(
                 flex: 1,
-                child: DropdownButtonFormField<String>(
+                child: Select(
                   value: currentBreed,
+                  label: 'Breed',
+                  items: breeds,
                   onChanged: (String value) => handleChange(breed: value),
-                  items: breeds
-                      .map<DropdownMenuItem<String>>(
-                        (String value) => DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        ),
-                      )
-                      .toList(),
-                  decoration: InputDecoration(
-                    labelText: 'Breed',
-                    border: InputBorder.none,
-                  ),
                 ),
-              )
+              ),
             ],
           ),
         ),
