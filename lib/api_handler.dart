@@ -48,14 +48,25 @@ class APIHandler {
     Response kindsRes =
         await get('$HOST/types', headers: {'Authorization': 'Bearer $token'});
 
-    dynamic kek = kindsRes.body;
-    print('$token $kek');
-
     List<String> kinds = convert
         .jsonDecode(kindsRes.body)['types']
         .map<String>((dynamic kindRaw) => kindRaw['name'].toString())
         .toList();
 
     return kinds;
+  }
+
+  Future<List<String>> getBreeds({String type = 'Any'}) async {
+    String token = await getToken();
+
+    Response breedsRes = await get('$HOST/types/$type/breeds',
+        headers: {'Authorization': 'Bearer $token'});
+
+    List<String> breeds = convert
+        .jsonDecode(breedsRes.body)['breeds']
+        .map<String>((dynamic breedRaw) => breedRaw['name'].toString())
+        .toList();
+
+    return breeds;
   }
 }
