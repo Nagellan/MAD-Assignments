@@ -1,3 +1,5 @@
+import 'package:assignment_3/Pet.dart';
+import 'package:assignment_3/api_handler.dart';
 import 'package:assignment_3/pages/home/filter.dart';
 import 'package:flutter/material.dart';
 
@@ -7,6 +9,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final api = APIHandler();
+
+  List<Pet> pets = [];
+
+  _HomeState() {
+    handleFilterChange();
+  }
+
+  void handleFilterChange({String kind, String breed}) async {
+    List<Pet> _pets = await api.getPets(kind, breed);
+    setState(() {
+      this.pets = _pets;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,13 +38,13 @@ class _HomeState extends State<Home> {
       body: Stack(children: <Widget>[
         ListView(
           padding: EdgeInsets.all(15),
-          children: <Widget>[
-            Text('Body'),
-          ],
+          children: pets.map((pet) => Text(pet.name)).toList(),
         ),
         Align(
           alignment: Alignment.bottomCenter,
-          child: Filter(),
+          child: Filter(
+            onChange: handleFilterChange,
+          ),
         ),
       ]),
     );
