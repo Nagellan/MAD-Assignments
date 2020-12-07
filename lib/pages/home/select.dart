@@ -14,13 +14,14 @@ class Select extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      isExpanded: true,
       value: value,
       onChanged: onChanged,
       items: items
               .map<DropdownMenuItem<String>>(
                 (String value) => DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(value, overflow: TextOverflow.ellipsis),
                 ),
               )
               .toList(),
