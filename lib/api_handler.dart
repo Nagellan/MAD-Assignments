@@ -13,7 +13,6 @@ class APIHandler {
   static final APIHandler _apiHandler = APIHandler._internal();
 
   factory APIHandler() {
-    print('API HANDLER INIT');
     return _apiHandler;
   }
 
@@ -48,8 +47,6 @@ class APIHandler {
 
     Response kindsRes =
         await get('$HOST/types', headers: {'Authorization': 'Bearer $token'});
-
-    dynamic kindsRess = kindsRes.body;
 
     List<String> kinds = convert
         .jsonDecode(kindsRes.body)['types']

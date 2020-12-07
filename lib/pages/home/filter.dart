@@ -25,13 +25,14 @@ class _FilterState extends State<Filter> {
   }
 
   _FilterState() {
-    print('FILTER INIT');
     init();
   }
 
   void handleChange({String kind, String breed}) {
-    currentKind = kind == null ? currentKind : kind;
-    currentBreed = breed == null ? currentBreed : breed;
+    setState(() {
+      if (kind != null) currentKind = kind;
+      if (breed != null) currentBreed = breed;
+    });
   }
 
   @override
@@ -54,10 +55,9 @@ class _FilterState extends State<Filter> {
                   label: 'Kind',
                   items: kinds,
                   onChanged: (String value) async {
-                    handleChange(kind: value);
+                    handleChange(kind: value, breed: 'Any');
                     List<String> newBreeds = await api.getBreeds(type: value);
                     setState(() {
-                      this.currentBreed = 'Any';
                       this.breeds = new List.from(['Any'])..addAll(newBreeds);
                     });
                   },
