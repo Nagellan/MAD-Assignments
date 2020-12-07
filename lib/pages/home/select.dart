@@ -6,7 +6,10 @@ class Select extends StatelessWidget {
   final List<String> items;
   final void Function(String) onChanged;
 
-  Select({this.value, this.label, this.items, this.onChanged});
+  Select({this.value, this.label, this.items, this.onChanged}) {
+    dynamic _items = items.toString();
+    print('SELECT $_items');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +17,13 @@ class Select extends StatelessWidget {
       value: value,
       onChanged: onChanged,
       items: items
-          .map<DropdownMenuItem<String>>(
-            (String value) => DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            ),
-          )
-          .toList(),
+              .map<DropdownMenuItem<String>>(
+                (String value) => DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                ),
+              )
+              .toList(),
       decoration: InputDecoration(
         labelText: label,
         border: InputBorder.none,

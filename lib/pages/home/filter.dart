@@ -1,23 +1,37 @@
 import 'package:assignment_3/pages/home/select.dart';
 import 'package:flutter/material.dart';
 
+import '../../api_handler.dart';
+
 class Filter extends StatefulWidget {
   @override
   _FilterState createState() => _FilterState();
 }
 
 class _FilterState extends State<Filter> {
-  List<String> kinds = ['Any', 'One', 'Two', 'Three', 'Four'];
-  List<String> breeds = ['Any', 'One', 'Two', 'Three', 'Four'];
+  final api = APIHandler();
+
+  List<String> kinds = ['Any'];
+  List<String> breeds = ['Any'];
 
   String currentKind = 'Any';
   String currentBreed = 'Any';
 
+  void init() async {
+    List<String> newKinds = await api.getKinds();
+    setState(() {
+      this.kinds = new List.from(['Any'])..addAll(newKinds);
+    });
+  }
+
+  _FilterState() {
+    print('FILTER INIT');
+    init();
+  }
+
   void handleChange({String kind, String breed}) {
     currentKind = kind == null ? currentKind : kind;
     currentBreed = breed == null ? currentBreed : breed;
-
-    print('$currentKind $currentBreed');
   }
 
   @override
@@ -39,7 +53,14 @@ class _FilterState extends State<Filter> {
                   value: currentKind,
                   label: 'Kind',
                   items: kinds,
-                  onChanged: (String value) => handleChange(kind: value),
+                  onChanged: (String value) async {
+                    handleChange(kind: value);
+                    List<String> newBreeds = await api.getBreeds(type: value);
+                    setState(() {
+                      this.currentBreed = 'Any';
+                      this.breeds = new List.from(['Any'])..addAll(newBreeds);
+                    });
+                  },
                 ),
               ),
               Container(

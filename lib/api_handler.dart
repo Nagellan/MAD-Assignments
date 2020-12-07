@@ -8,17 +8,18 @@ const HOST = "https://api.petfinder.com/v2";
 const CLIENT_ID = "8n5zMTRe2clOwwtsDZyHjWpTuaCuiMIwzrn0GS9DUTpQKWbVx3";
 const CLIENT_SECRET = "q3akGs0YYEeE2fNjvmu6Tirs3vFqVGt4AneiQv6G";
 
+// SINGLETON
 class APIHandler {
+  static final APIHandler _apiHandler = APIHandler._internal();
+
+  factory APIHandler() {
+    print('API HANDLER INIT');
+    return _apiHandler;
+  }
+
+  APIHandler._internal();
+
   final storage = new FlutterSecureStorage();
-
-  APIHandler() {
-    init();
-  }
-
-  void init() async {
-    await getToken();
-    List<String> kinds = await getKinds();
-  }
 
   Future<String> getToken({bool force = false}) async {
     dynamic token = await storage.read(key: 'token');
@@ -43,10 +44,12 @@ class APIHandler {
   }
 
   Future<List<String>> getKinds() async {
-    String token = await getToken();
+    String token = await getToken(force: true);
 
     Response kindsRes =
         await get('$HOST/types', headers: {'Authorization': 'Bearer $token'});
+
+    dynamic kindsRess = kindsRes.body;
 
     List<String> kinds = convert
         .jsonDecode(kindsRes.body)['types']

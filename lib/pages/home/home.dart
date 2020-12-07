@@ -1,14 +1,12 @@
-import 'package:assignment_3/api_handler.dart';
 import 'package:assignment_3/pages/home/filter.dart';
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  final api = new APIHandler();
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
 
-  Home() {
-    api.getToken();
-  }
-
+class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
