@@ -1,4 +1,4 @@
-import 'package:assignment_3/pages/home/list_item/pet_image.dart';
+import 'package:assignment_3/pet_image/pet_image.dart';
 import 'package:assignment_3/pages/home/list_item/progress.dart';
 import 'package:assignment_3/pet.dart';
 import 'package:cached_network_image/cached_network_image.dart';
