@@ -39,8 +39,19 @@ class APIHandlerCached implements APIHandlerInterface {
   }
 
   @override
-  Future<List<String>> getKinds() {
-    return api.getKinds();
+  Future<List<String>> getKinds() async {
+    try {
+      List<String> kinds = await api.getKindsUnsafe();
+      _kinds.doc('kinds').set({'kinds': kinds});
+      return kinds;
+    } catch (error) {
+      return _kinds.doc('kinds').get().then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          return new Future.value(documentSnapshot.data()['kinds']);
+        }
+        return new Future.value([]);
+      });
+    }
   }
 
   @override
