@@ -1,10 +1,23 @@
 import 'package:assignment_3/pet.dart';
 import 'api_handler.dart';
 import 'api_handler_interface.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-// PROXY
+
+// PROXY SINGLETON
 class APIHandlerCached implements APIHandlerInterface {
   final api = APIHandler();
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  static final APIHandlerCached _apiHandlerCached =
+      APIHandlerCached._internal();
+
+  factory APIHandlerCached() {
+    return _apiHandlerCached;
+  }
+
+  APIHandlerCached._internal();
 
   @override
   Future<List<String>> getBreeds({String kind = 'Any'}) {
