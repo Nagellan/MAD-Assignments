@@ -45,7 +45,7 @@ class APIHandler implements APIHandlerInterface {
     return token;
   }
 
-  Future<List<String>> getKinds() async {
+  Future<List<String>> getKindsUnsafe() async {
     try {
       // TODO: fix force getting token - it should be updated only on expiration
       String token = await _getToken(force: true);
@@ -61,11 +61,19 @@ class APIHandler implements APIHandlerInterface {
       return kinds;
     } catch (error) {
       print('ERROR in getKinds: $error');
+      throw error;
+    }
+  }
+
+  Future<List<String>> getKinds() async {
+    try {
+      return await getKindsUnsafe();
+    } catch (error) {
       return [];
     }
   }
 
-  Future<List<String>> getBreeds({String kind = 'Any'}) async {
+  Future<List<String>> getBreedsUnsafe({String kind = 'Any'}) async {
     try {
       // TODO: fix force getting token - it should be updated only on expiration
       String token = await _getToken(force: true);
@@ -81,11 +89,19 @@ class APIHandler implements APIHandlerInterface {
       return breeds;
     } catch (error) {
       print('ERROR in getBreeds: $error');
+      throw error;
+    }
+  }
+
+  Future<List<String>> getBreeds({String kind = 'Any'}) async {
+    try {
+      return await getBreedsUnsafe(kind: kind);
+    } catch (error) {
       return [];
     }
   }
 
-  Future<List<Pet>> getPets(String kind, String breed) async {
+  Future<List<Pet>> getPetsUnsafe(String kind, String breed) async {
     try {
       // TODO: fix force getting token - it should be updated only on expiration
       String token = await _getToken(force: true);
@@ -118,6 +134,14 @@ class APIHandler implements APIHandlerInterface {
       return pets;
     } catch (error) {
       print('ERROR in getPets: $error');
+      throw error;
+    }
+  }
+
+  Future<List<Pet>> getPets(String kind, String breed) async {
+    try {
+      return await getPetsUnsafe(kind, breed);
+    } catch (error) {
       return [];
     }
   }
