@@ -45,7 +45,10 @@ class APIHandlerCached implements APIHandlerInterface {
       _kinds.doc('kinds').set({'kinds': kinds});
       return kinds;
     } catch (error) {
-      return _kinds.doc('kinds').get().then((DocumentSnapshot documentSnapshot) {
+      return _kinds
+          .doc('kinds')
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
           return new Future.value(documentSnapshot.data()['kinds']);
         }
@@ -55,7 +58,26 @@ class APIHandlerCached implements APIHandlerInterface {
   }
 
   @override
-  Future<List<Pet>> getPets(String kind, String breed) {
-    return api.getPets(kind, breed);
+  Future<List<Pet>> getPets(String kind, String breed) async {
+    try {
+      List<Pet> pets = await api.getPetsUnsafe(kind, breed);
+      _pets.doc('$kind-$breed').set(Map.fromIterable(pets,
+          key: (pet) => pet.id.toString(), value: (pet) => pet.toMap()));
+      return pets;
+    } catch (error) {
+      return _pets
+          .doc('$kind-$breed')
+          .get()
+          .then((DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          return new Future.value(documentSnapshot
+              .data()
+              .entries
+              .map((e) => new Pet().byObject(e.value))
+              .toList());
+        }
+        return new Future.value([]);
+      });
+    }
   }
 }

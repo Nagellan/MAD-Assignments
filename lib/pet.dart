@@ -14,4 +14,25 @@ class Pet {
     this.description,
     this.imgUrl,
   });
+
+  Pet byObject(dynamic pet) {
+    id = pet.id;
+    name = pet.name;
+    gender = pet.gender;
+    size = pet.size;
+    description = pet.description;
+    imgUrl = pet.imgUrl;
+
+    return this;
+  }
+
+  Map<String, dynamic> toMap() {
+    return new Map.from({
+      'name': name,
+      'gender': gender,
+      'size': size,
+      'description': description,
+      'imgUrl': imgUrl,
+    });
+  }
 }
