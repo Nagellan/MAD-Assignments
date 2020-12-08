@@ -5,12 +5,14 @@ import 'package:assignment_3/pet.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 
+import 'api_handler_interface.dart';
+
 const HOST = "https://api.petfinder.com/v2";
 const CLIENT_ID = "8n5zMTRe2clOwwtsDZyHjWpTuaCuiMIwzrn0GS9DUTpQKWbVx3";
 const CLIENT_SECRET = "q3akGs0YYEeE2fNjvmu6Tirs3vFqVGt4AneiQv6G";
 
 // SINGLETON
-class APIHandler {
+class APIHandler implements APIHandlerInterface {
   static final APIHandler _apiHandler = APIHandler._internal();
 
   factory APIHandler() {

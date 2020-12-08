@@ -1,6 +1,6 @@
+import 'package:assignment_3/pages/api_handler/api_handler_cached.dart';
 import 'package:assignment_3/pages/home/filter/select.dart';
 import 'package:flutter/material.dart';
-import 'package:assignment_3/api_handler.dart';
 
 class Filter extends StatefulWidget {
   final Function({String kind, String breed}) onChange;
@@ -14,7 +14,7 @@ class Filter extends StatefulWidget {
 // TODO: add loading state
 
 class _FilterState extends State<Filter> {
-  final api = APIHandler();
+  final api = APIHandlerCached();
 
   List<String> kinds = ['Any'];
   List<String> breeds = ['Any'];

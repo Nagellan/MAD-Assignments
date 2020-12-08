@@ -1,5 +1,5 @@
+import 'package:assignment_3/pages/api_handler/api_handler_cached.dart';
 import 'package:assignment_3/pet.dart';
-import 'package:assignment_3/api_handler.dart';
 import 'package:assignment_3/pages/home/filter/filter.dart';
 import 'package:assignment_3/pages/home/list_item/list_item.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +10,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final api = APIHandler();
+  final api = APIHandlerCached();
 
   List<Pet> pets = [];
 
