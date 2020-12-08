@@ -27,6 +27,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Color.fromRGBO(101, 4, 181, 1),
@@ -37,8 +38,26 @@ class _HomeState extends State<Home> {
       ),
       body: Stack(children: <Widget>[
         ListView(
-          padding: EdgeInsets.all(15),
-          children: pets.map((pet) => Text(pet.name)).toList(),
+          padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
+          children: pets
+              .map((pet) => ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+                    leading: CircleAvatar(
+                      radius: 35,
+                      backgroundImage:
+                          pet.imgUrl != null ? NetworkImage(pet.imgUrl) : null,
+                      backgroundColor: Colors.deepPurple[100],
+                    ),
+                    title: Text(
+                      pet.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    subtitle:
+                        pet.description != null ? Text(pet.description) : null,
+                  ))
+              .toList(),
         ),
         Align(
           alignment: Alignment.bottomCenter,
