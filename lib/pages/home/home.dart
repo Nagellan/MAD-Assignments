@@ -1,4 +1,4 @@
-import 'package:assignment_3/pages/api_handler/api_handler_cached.dart';
+import 'package:assignment_3/api_handler/api_handler_cached.dart';
 import 'package:assignment_3/pet.dart';
 import 'package:assignment_3/pages/home/filter/filter.dart';
 import 'package:assignment_3/pages/home/list_item/list_item.dart';
@@ -40,7 +40,12 @@ class _HomeState extends State<Home> {
       body: Stack(children: <Widget>[
         ListView(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
-          children: pets.map((pet) => ListItem(pet: pet)).toList(),
+          children: pets
+              .map((pet) => ListItem(
+                    pet: pet,
+                    context: context,
+                  ))
+              .toList(),
         ),
         Align(
           alignment: Alignment.bottomCenter,

@@ -6,13 +6,15 @@ import 'package:flutter/material.dart';
 
 class PetImageCached extends StatelessWidget {
   final Pet pet;
+  final double radius;
 
-  PetImageCached({this.pet});
+  PetImageCached({this.pet, this.radius});
 
   @override
   Widget build(BuildContext context) {
     return pet.imgUrl == null
         ? PetImage(
+            radius: radius,
             child: Icon(
               Icons.pets,
               color: Colors.white,
@@ -21,12 +23,15 @@ class PetImageCached extends StatelessWidget {
         : CachedNetworkImage(
             imageUrl: pet.imgUrl,
             imageBuilder: (context, imageProvider) => PetImage(
+              radius: radius,
               image: imageProvider,
             ),
             placeholder: (context, url) => PetImage(
+              radius: radius,
               child: Progress(),
             ),
             errorWidget: (context, url, error) => PetImage(
+              radius: radius,
               child: Icon(
                 Icons.error,
                 color: Colors.white,
