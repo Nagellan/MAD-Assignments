@@ -1,7 +1,7 @@
 import 'package:assignment_3/pet.dart';
 import 'package:assignment_3/api_handler.dart';
-import 'package:assignment_3/pages/home/filter.dart';
-import 'package:assignment_3/pages/home/list_item.dart';
+import 'package:assignment_3/pages/home/filter/filter.dart';
+import 'package:assignment_3/pages/home/list_item/list_item.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
