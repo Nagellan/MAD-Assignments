@@ -1,6 +1,7 @@
-import 'package:assignment_3/Pet.dart';
+import 'package:assignment_3/pet.dart';
 import 'package:assignment_3/api_handler.dart';
 import 'package:assignment_3/pages/home/filter.dart';
+import 'package:assignment_3/pages/home/list_item.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -39,25 +40,7 @@ class _HomeState extends State<Home> {
       body: Stack(children: <Widget>[
         ListView(
           padding: EdgeInsets.fromLTRB(15, 0, 15, 100),
-          children: pets
-              .map((pet) => ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-                    leading: CircleAvatar(
-                      radius: 35,
-                      backgroundImage:
-                          pet.imgUrl != null ? NetworkImage(pet.imgUrl) : null,
-                      backgroundColor: Colors.deepPurple[100],
-                    ),
-                    title: Text(
-                      pet.name,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    subtitle:
-                        pet.description != null ? Text(pet.description) : null,
-                  ))
-              .toList(),
+          children: pets.map((pet) => ListItem(pet: pet)).toList(),
         ),
         Align(
           alignment: Alignment.bottomCenter,

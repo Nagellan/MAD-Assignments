@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert' as convert;
 
-import 'package:assignment_3/Pet.dart';
+import 'package:assignment_3/pet.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart';
 
