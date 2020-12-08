@@ -31,7 +31,11 @@ class APIHandlerCached implements APIHandlerInterface {
     } catch (error) {
       return _breeds.doc(kind).get().then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          return new Future.value(documentSnapshot.data()['breeds']);
+          List<String> breeds = [];
+          documentSnapshot.data()['breeds'].forEach((breed) {
+            breeds.add(breed.toString());
+          });
+          return new Future.value(breeds);
         }
         return new Future.value([]);
       });
@@ -50,7 +54,11 @@ class APIHandlerCached implements APIHandlerInterface {
           .get()
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          return new Future.value(documentSnapshot.data()['kinds']);
+          List<String> kinds = [];
+          documentSnapshot.data()['kinds'].forEach((kind) {
+            kinds.add(kind.toString());
+          });
+          return new Future.value(kinds);
         }
         return new Future.value([]);
       });
@@ -62,8 +70,7 @@ class APIHandlerCached implements APIHandlerInterface {
     try {
       List<Pet> pets = await api.getPetsUnsafe(kind, breed);
       _pets.doc('$kind-$breed').set(Map.fromIterable(pets,
-          key: (pet) => pet.id.toString(),
-          value: (pet) => pet.toMap()));
+          key: (pet) => pet.id.toString(), value: (pet) => pet.toMap()));
       return pets;
     } catch (error) {
       return _pets
