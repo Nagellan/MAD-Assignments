@@ -62,7 +62,8 @@ class APIHandlerCached implements APIHandlerInterface {
     try {
       List<Pet> pets = await api.getPetsUnsafe(kind, breed);
       _pets.doc('$kind-$breed').set(Map.fromIterable(pets,
-          key: (pet) => pet.id.toString(), value: (pet) => pet.toMap()));
+          key: (pet) => pet.id.toString(),
+          value: (pet) => pet.toMap()));
       return pets;
     } catch (error) {
       return _pets
@@ -70,11 +71,11 @@ class APIHandlerCached implements APIHandlerInterface {
           .get()
           .then((DocumentSnapshot documentSnapshot) {
         if (documentSnapshot.exists) {
-          return new Future.value(documentSnapshot
-              .data()
-              .entries
-              .map((e) => new Pet().byObject(e.value))
-              .toList());
+          return new Future.value(documentSnapshot.data().entries.map((e) {
+            Map<String, dynamic> petObj = {'id': e.key};
+            petObj.addAll(e.value);
+            return Pet.byObject(petObj);
+          }).toList());
         }
         return new Future.value([]);
       });

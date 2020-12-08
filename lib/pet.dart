@@ -15,15 +15,15 @@ class Pet {
     this.imgUrl,
   });
 
-  Pet byObject(dynamic pet) {
-    id = pet.id;
-    name = pet.name;
-    gender = pet.gender;
-    size = pet.size;
-    description = pet.description;
-    imgUrl = pet.imgUrl;
-
-    return this;
+  static Pet byObject(dynamic pet) {
+    return new Pet(
+      id: int.parse(pet['id']),
+      name: pet['name'],
+      gender: pet['gender'],
+      size: pet['size'],
+      description: pet['description'],
+      imgUrl: pet['imgUrl'],
+    );
   }
 
   Map<String, dynamic> toMap() {
